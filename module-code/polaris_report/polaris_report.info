@@ -1,0 +1,6 @@
+name = Polaris Report v1
+description = Type report generator module.
+core = 7.x
+package = Polaris
+
+files[] = polaris_report.controller.inc

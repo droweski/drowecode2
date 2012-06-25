@@ -1,0 +1,233 @@
+<?php
+
+/**
+ * @file
+ * Install file for the polaris report module.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function polaris_report_schema() {
+  $schema['polaris_report'] = array(
+    'description' => 'polaris report.',
+    'fields' => array(
+      'report_id' => array(
+        'description' => 'Report id',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'report_name' => array(
+        'description' => 'Description of the report',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'uid' => array(
+        'description' => 'The {users}.uid that owns this report.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'date' => array(
+        'description' => 'Date of report',
+        'type' => 'varchar',
+        'length' => 20,
+        'not null' => TRUE,
+      ),        
+      'report_type' => array(
+        'description' => 'The report type.',
+        'type' => 'int',
+        'length' => 3,
+        'not null' => TRUE,
+        'default' => 1,
+      ),
+      'score_type' => array(
+        'type' => 'varchar',
+        'length' => 128,
+        'not null' => FALSE,
+        'default' => 'raw',
+      ),        
+      'fname1' => array(
+        'description' => 'First name 1.',
+        'type' => 'varchar',
+        'length' => 128,
+        'not null' => FALSE,
+        'default' => '',
+      ),
+      'lname1' => array(
+        'description' => 'Last name 1.',
+        'type' => 'varchar',
+        'length' => 128,
+        'not null' => FALSE,
+        'default' => '',
+      ),
+      'org1' => array(
+        'description' => 'Organization name 1.',
+        'type' => 'varchar',
+        'length' => 128,
+        'not null' => FALSE,
+        'default' => '',
+      ),
+      'p_type1' => array(
+        'description' => 'Personality type 1.',
+        'type' => 'varchar',
+        'length' => 128,
+        'not null' => FALSE,
+        'default' => '',
+      ),
+      'ei_score1' => array(
+        'description' => 'EL score 1.',
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+      ),
+      'ns_score1' => array(
+        'description' => 'NS score 1.',
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+      ),
+      'ft_score1' => array(
+        'description' => 'FT score 1.',
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+      ),
+      'jp_score1' => array(
+        'description' => 'JP score 1.',
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+      ), 
+      'fname2' => array(
+        'description' => 'Report item first name 2.',
+        'type' => 'varchar',
+        'length' => 128,
+        'not null' => FALSE,
+        'default' => '',
+      ),
+      'lname2' => array(
+        'description' => 'Report item last name 2.',
+        'type' => 'varchar',
+        'length' => 128,
+        'not null' => FALSE,
+        'default' => '',
+      ),
+      'org2' => array(
+        'description' => 'Report item organization name 2.',
+        'type' => 'varchar',
+        'length' => 128,
+        'not null' => FALSE,
+        'default' => '',
+      ),
+      'p_type2' => array(
+        'description' => 'Report personality type 2.',
+        'type' => 'varchar',
+        'length' => 128,
+        'not null' => FALSE,
+        'default' => '',
+      ),
+      'ei_score2' => array(
+        'description' => 'EL score 2.',
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+      ),
+      'ns_score2' => array(
+        'description' => 'NS score 2.',
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+      ),
+      'ft_score2' => array(
+        'description' => 'FT score 2.',
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+      ),
+      'jp_score2' => array(
+        'description' => 'JP score 2.',
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+      ),
+      'narrative' => array(
+        'description' => 'Narrative flag.',
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 1,
+      ),
+      'temperament' => array(
+        'description' => 'Temperament flag.',
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 1,
+      ),
+      'suggestions' => array(
+        'description' => 'Suggestions flag.',
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+      ),
+      'cat_org' => array(
+        'description' => 'Catagory - Organization.',
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+      ),
+      'cat_lead' => array(
+        'description' => 'Catagory - Leadership.',
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+      ),
+      'cat_com' => array(
+        'description' => 'Catagory - Communication.',
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+      ),
+      'cat_prob' => array(
+        'description' => 'Catagory - Problem solving.',
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+      ),
+      'cat_stress' => array(
+        'description' => 'Catagory - Stress.',
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+      ),
+      'cat_motive' => array(
+        'description' => 'Catagory - Motivation.',
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+      ),
+      'cat_team' => array(
+        'description' => 'Catagory - Team.',
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+      ),
+      'cat_learn' => array(
+        'description' => 'Catagory - Learning.',
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+      ),
+      'cat_growth' => array(
+        'description' => 'Catagory - Growth.',
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+      ), 
+    ),
+    'primary key' => array('report_id'),
+  );
+  return $schema;
+}

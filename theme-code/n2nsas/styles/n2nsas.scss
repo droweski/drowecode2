@@ -1,0 +1,62 @@
+/* 
+ * n2nsas main stylesheet.
+ * 
+ */
+
+/*         Variables
+ *************************************************/
+$ltblue #52658C;
+$dkblue #585570;
+$warm #994535;
+$fontcolor #505070;
+$fontsize: .9em;
+
+/*         General Sitewide Styles
+ *************************************************/
+  /* Layout */
+
+#site-slogan {
+    position: relative;
+    float: right;
+    margin: 20px 0 0 0;
+    color: $warm;
+    font-style: italic;
+    font-size: 1.3em;
+    }
+#breadbox {
+    color: $dkblue;
+    font-size: 0.8em;
+    }
+
+
+  /* General Styles (Colors, Backgrounds etc.)*/
+
+  /* Typography */
+
+#page {
+    color: $fontcolor;
+    font-size: $fontsize;
+    }
+    
+  /* Links */
+
+  /* header */
+.headerblock {
+    position: relative;
+    float: right;
+    clear: right;
+    }
+  /* Sidebars */
+
+  /* Footer */
+
+
+/*         Front Page
+ *************************************************/
+
+/*         Inner Pages
+ *************************************************/
+
+/*         Forms
+ *************************************************/
+

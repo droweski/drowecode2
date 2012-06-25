@@ -1,0 +1,145 @@
+name = solana4
+description = Custom theme for Drupal 6
+screenshot = css/images/screenshot.gif
+core = "6.x"
+engine = phptemplate
+
+regions[sectionhead] = Section header
+regions[header] = Header
+regions[menubar] = Menu bar
+regions[content_top] = Content top
+regions[left] = First sidebar
+regions[right] = Second sidebar
+regions[content_bottom] = Content bottom
+regions[footer_block] = Footer
+
+features[] = logo
+features[] = name
+features[] = slogan
+features[] = mission
+features[] = node_user_picture
+features[] = comment_user_picture
+features[] = search
+features[] = favicon
+features[] = primary_links
+features[] = secondary_links
+
+stylesheets[all][] = css/default.css
+stylesheets[all][] = css/layout.css
+stylesheets[all][] = css/style.css
+stylesheets[print][] = css/print.css
+             
+settings[solana4_zen_tabs]             = 1
+settings[solana4_wireframe]            = 0
+settings[solana4_block_editing]        = 1
+settings[solana4_rebuild_registry]     = 0
+
+;----------// Skinr Styles
+  ; Grids - 960px, 16 column grid classes, with a single 12 grid class (4-12 for 3x320 layout)
+  skinr[sl-grid][title] = Width
+  skinr[sl-grid][type] = select
+  skinr[sl-grid][description] = Select the width for this block. All blocks with widths set will float left to align themselves horizontally. A block with no width set will take up the full with of the region (and clear the other blocks above it)
+  skinr[sl-grid][features][] = block
+  skinr[sl-grid][features][] = panels_pane
+  
+  skinr[sl-grid][options][1][label] = 40px
+  skinr[sl-grid][options][1][class] = grid-1
+  skinr[sl-grid][options][2][label] = 140px
+  skinr[sl-grid][options][2][class] = grid-2
+  skinr[sl-grid][options][3][label] = 160px
+  skinr[sl-grid][options][3][class] = grid-3
+  skinr[sl-grid][options][4][label] = 210px
+  skinr[sl-grid][options][4][class] = grid-4
+  skinr[sl-grid][options][5][label] = 280px
+  skinr[sl-grid][options][5][class] = grid-5
+  skinr[sl-grid][options][6][label] = 340px
+  skinr[sl-grid][options][6][class] = grid-6
+  skinr[sl-grid][options][7][label] = 420px
+  skinr[sl-grid][options][7][class] = grid-7
+  skinr[sl-grid][options][8][label] = 480px
+  skinr[sl-grid][options][8][class] = grid-8
+  skinr[sl-grid][options][9][label] = 540px
+  skinr[sl-grid][options][9][class] = grid-9
+  skinr[sl-grid][options][10][label] = 600px
+  skinr[sl-grid][options][10][class] = grid-10
+  skinr[sl-grid][options][11][label] = 660px
+  skinr[sl-grid][options][11][class] = grid-11
+  skinr[sl-grid][options][12][label] = 720px
+  skinr[sl-grid][options][12][class] = grid-12
+  skinr[sl-grid][options][13][label] = 780px
+  skinr[sl-grid][options][13][class] = grid-13
+  skinr[sl-grid][options][14][label] = 840px
+  skinr[sl-grid][options][14][class] = grid-14
+  skinr[sl-grid][options][15][label] = 900px
+  skinr[sl-grid][options][15][class] = grid-15
+  skinr[sl-grid][options][16][label] = 960px
+  skinr[sl-grid][options][16][class] = grid-16
+  
+  ; Content alignment
+  skinr[sl-align-content][title] = Content alignment
+  skinr[sl-align-content][type] = select
+  skinr[sl-align-content][options][1][label] = Center content within its container
+  skinr[sl-align-content][options][1][class] = sl-center-content
+  skinr[sl-align-content][options][2][label] = Align content to the right within its container
+  skinr[sl-align-content][options][2][class] = sl-align-right-content
+  skinr[sl-align-content][options][3][label] = Align content to the left within its container
+  skinr[sl-align-content][options][3][class] = sl-align-left-content
+
+  ; Equal heights
+  skinr[sl-equal-heights][title] = Equal heights
+  skinr[sl-equal-heights][type] = checkboxes
+  skinr[sl-equal-heights][description] = Make blocks in a region the same height
+  skinr[sl-equal-heights][features][] = block
+  skinr[sl-equal-heights][scripts][] = js/jquery.equalheights.js
+  skinr[sl-equal-heights][options][1][label] = <span class="preview-text">Equal heights: equalize the heights of blocks with this style in the same region <span class="preview-icon" id="sl-general-styles-equal-heights"></span></span>
+  skinr[sl-equal-heights][options][1][class] = equal-heights
+
+  ; Additional menu styles
+  skinr[sl-menu][title] = Menu layout
+  skinr[sl-menu][type] = select
+  skinr[sl-menu][description] = Different layouts and alignment options for your menus
+  skinr[sl-menu][features][] = block
+  skinr[sl-menu][features][] = panels_pane
+  skinr[sl-menu][options][1][label] = Horizontal inline menu
+  skinr[sl-menu][options][1][class] = sl-inline-menu clearfix
+  skinr[sl-menu][options][2][label] = Multi-column menu with headers
+  skinr[sl-menu][options][2][class] = sl-multicolumn-menu clearfix
+  
+  ; Image styles
+  skinr[sl-float-imagefield][title] = Image floating styles
+  skinr[sl-float-imagefield][type] = select
+  skinr[sl-float-imagefield][description] = These options will float ImageField images in content to the left or right and add margins
+  skinr[sl-float-imagefield][features][] = block
+  skinr[sl-float-imagefield][features][] = node
+  skinr[sl-float-imagefield][features][] = views_view
+  skinr[sl-float-imagefield][options][1][label] = Float ImageField left
+  skinr[sl-float-imagefield][options][1][class] = sl-float-imagefield-left
+  skinr[sl-float-imagefield][options][2][label] = Float ImageField right
+  skinr[sl-float-imagefield][options][2][class] = sl-float-imagefield-right
+
+  ; block styles
+  skinr[sl-block-format][title] = Block formating styles
+  skinr[sl-block-format][type] = select
+  skinr[sl-block-format][description] = These options will format blocks
+  skinr[sl-block-format][features][] = block
+  skinr[sl-block-format][features][] = node
+  skinr[sl-block-format][features][] = views_view
+  skinr[sl-block-format][options][1][label] = block style 1
+  skinr[sl-block-format][options][1][class] = sl-block-format-c1
+  skinr[sl-block-format][options][2][label] = block style 2
+  skinr[sl-block-format][options][2][class] = sl-block-format-c2
+  skinr[sl-block-format][options][3][label] = block style 3
+  skinr[sl-block-format][options][3][class] = sl-block-format-c3
+  skinr[sl-block-format][options][4][label] = block style 4
+  skinr[sl-block-format][options][4][class] = sl-block-format-c4
+  skinr[sl-block-format][options][5][label] = block style 5
+  skinr[sl-block-format][options][5][class] = sl-block-format-c5
+  skinr[sl-block-format][options][6][label] = block style col-rt1
+  skinr[sl-block-format][options][6][class] = sl-block-format-cr1
+  skinr[sl-block-format][options][7][label] = block style col-rt2
+  skinr[sl-block-format][options][7][class] = sl-block-format-cr2
+  skinr[sl-block-format][options][8][label] = block style col-rt3
+  skinr[sl-block-format][options][8][class] = sl-block-format-cr3
+  skinr[sl-block-format][options][9][label] = block style col-rt4
+  skinr[sl-block-format][options][9][class] = sl-block-format-cr4
+  

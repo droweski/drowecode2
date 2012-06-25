@@ -1,0 +1,67 @@
+/*
+ * css for transforming vertical tabs into horizontal tabs
+**/
+
+.htab div.vertical-tabs .vertical-tabs-list {
+  width: 100%;
+  margin: 0;
+  clear: both;
+  border-bottom: none;
+  margin-bottom: -1px;
+}
+ 
+.htab  div.vertical-tabs {
+  background: #FFFFFF;
+  border: none;
+  border-radius: none;
+  -moz-border-radius: none;
+  -webkit-border-radius: none;
+  -o-border-radius: none;
+  margin: 10px 0;
+  position: relative;
+}
+ 
+.htab div.vertical-tabs .vertical-tabs-panes {
+  margin: 0;
+  padding: 10px 15px;
+  clear: both;
+  border: 1px solid #ccc;
+}
+ 
+.htab div.vertical-tabs ul li.vertical-tab-button {
+  float: left;
+  margin: 0 3px 0 0;
+  border: 1px solid #aaa;
+  border-bottom: 1px solid #ccc;
+  border-radius: 10px 10px 0 0;
+  -moz-border-radius: 10px 10px 0 0;
+  -o-border-radius: 10px 10px 0 0;
+  -webkit-border-radius: 10px 10px 0 0;
+  background: #ddd;
+}
+ 
+.htab div.vertical-tabs ul li.vertical-tab-button a {
+  border-top: medium none;
+  font-size: 0.917em;
+  line-height: 120%;
+  padding: 5px 9px 3px;
+}
+ 
+.htab div.vertical-tabs ul li.vertical-tab-button a:hover {
+  background: none;
+}
+ 
+.htab div.vertical-tabs ul li.selected {
+  border: 1px solid #ccc;
+  border-bottom: 1px solid #fff;
+  background: #fff;
+}
+ 
+.htab div.vertical-tabs ul li.selected a, 
+.htab div.vertical-tabs ul li.selected a:hover, 
+.htab div.vertical-tabs ul li.selected a:focus, 
+.htab div.vertical-tabs ul li.selected a:active {
+  background: none;
+  border: none;
+  text-decoration: none;
+}

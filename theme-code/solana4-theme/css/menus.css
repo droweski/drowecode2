@@ -1,0 +1,85 @@
+/* BASE menu */
+ul.nice-menu,
+ul.nice-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-family: 'MyriadWebProRegular', "Trebuchet MS", Helvetica, Arial, sans-serif;
+}
+ul.nice-menu li {
+  float: left;
+}
+ul.nice-menu a {
+  display: inline-block;
+  width: 122px;
+  text-align: center;
+  padding: 11px 0 10px;
+  color: #333;
+  text-decoration: none;
+}
+ul.nice-menu a:hover {
+  color: #069;
+}
+ul.nice-menu ul {
+  
+  padding: 5px 0;
+  left: -1px;
+  margin-right: 0;
+  margin-top: -4px;
+}
+ul.nice-menu ul li {
+}
+ul.nice-menu ul li a{
+  display: inline-block;
+  text-align: left;
+  width: auto;
+  padding: 5px 8px;
+  text-decoration: none;
+}
+
+/* HORIZONTAL (down) menus */
+ul.nice-menu-down {
+  float: left;
+  border: 0;
+  height: 40px;
+}
+ul.nice-menu-down li {
+  font-size: 1.2em;
+}
+ul.nice-menu-down ul {
+  left: 0;
+  background-color: #e3f1f9;
+}
+ul.nice-menu-down ul li {
+  clear: both;
+  padding: 0 8px;
+  font-family:Helvetica, Arial, sans-serif;
+  font-size: .8em;
+  white-space:nowrap;
+  background-color: #e3f1f9;
+}
+ul.nice-menu-down li ul li ul {
+  left: 12.5em;
+  top: -1px;
+}
+ul.nice-menu-down .menuparent a {
+}
+ul.nice-menu-down > li {
+  background: url('../images/nav_divider.jpg') no-repeat right center;
+  height: 40px;
+}
+ul.nice-menu-down li.menu-319 {
+  background: url('../images/nav_bg_green.gif') repeat-x left center;
+  height: 40px;
+}
+
+/* site css  */
+/* ------  block 1 ------- */
+#block-nice_menus-1 {
+  float: right;
+  height: 37px;
+  width: 732px;
+}
+#block-nice_menus-1 ul li {
+  display: block;
+}

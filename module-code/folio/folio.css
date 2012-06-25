@@ -1,0 +1,54 @@
+
+.folio-navigation .menu {
+  border-top: 1px solid #888;
+  padding: 1em 0 0 3em; /* LTR */
+}
+.folio-navigation .page-links {
+  border-top: 1px solid #888;
+  border-bottom: 1px solid #888;
+  text-align: center;
+  padding: 0.5em;
+}
+.folio-navigation .page-previous {
+  text-align: left;
+  width: 42%;
+  display: block;
+  float: left; /* LTR */
+}
+.folio-navigation .page-up {
+  margin: 0 5%;
+  width: 4%;
+  display: block;
+  float: left; /* LTR */
+}
+.folio-navigation .page-next {
+  text-align: right;
+  width: 42%;
+  display: block;
+  float: right;
+}
+#folio-outline {
+  min-width: 56em;
+}
+.folio-outline-form .form-item {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+html.js #edit-folio-pick-folio {
+  display: none;
+}
+.form-item-folio-bid .description {
+  clear: both;
+}
+#folio-admin-edit select {
+  margin-right: 24px;
+}
+#folio-admin-edit select.progress-disabled {
+  margin-right: 0;
+}
+#folio-admin-edit tr.ajax-new-content {
+  background-color: #ffd;
+}
+#folio-admin-edit .form-item {
+  float: left;
+}

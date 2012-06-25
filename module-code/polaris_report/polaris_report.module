@@ -1,0 +1,185 @@
+<?php
+
+/**
+ *@file
+ * Polaris type report manager module.
+ */
+
+include_once drupal_get_path('module', 'polaris_report') .'/report_add_form.inc';
+include_once drupal_get_path('module', 'polaris_report') .'/report_list_form.inc';
+include_once drupal_get_path('module', 'polaris_report') .'/report_generate.inc'; 
+
+/**
+ * Implements hook_entity_info().
+ */
+function polaris_report_entity_info() {
+  $return['polaris_report'] = array(
+    'label' => t('Polaris type Report'),
+    'controller class' => 'PolarisReportController',
+    'base table' => 'polaris_report',
+    'fieldable' => FALSE,
+    // these keys are identical to the the fields in the database schema
+    'entity keys' => array(
+      'id' => 'report_id',
+      'label' => 'report_name',
+    ),
+    'view modes' => array(
+      'full' => array(
+        'label' => t('Full content'),
+        'custom settings' => FALSE,
+      ),
+    ),
+  );
+  return $return;
+}
+
+/**
+ * Implements hook_menu().
+ */
+function polaris_report_menu() {
+  // Add-report link.
+  $items['reports/add'] = array(
+    'title' => 'Add a report',
+    'page callback' => 'polaris_report_add',
+    'access arguments' => array('create reports'),
+    'weight' => 20,      
+    'type' => MENU_NORMAL_ITEM,
+  );
+  // Report-list link.  
+  $items['reports/list'] = array(
+    'title' => 'Your report list',
+    'page callback' => 'polaris_report_list',
+    'access arguments' => array('view report list'),
+    'weight' => 21,      
+    'type' => MENU_NORMAL_ITEM,
+  );
+  // Report generate page.
+  $items['reports/%polaris_report/generate'] = array(
+    'title' => 'Print',
+    'page callback' => 'polaris_report_generate',
+    'page arguments' => array(1),
+    'access arguments' => array('view own reports'),
+    'type' => MENU_LOCAL_ACTION,
+  );
+  // Edit-report action-link
+  $items['reports/%polaris_report/edit'] = array(
+    'title' => 'Edit',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('polaris_report_form', 1),
+    'access arguments' => array('administer type reports'),
+    'type' => MENU_LOCAL_ACTION,
+  );
+  // Delete-report action-link
+  $items['reports/%polaris_report/delete'] = array(
+    'title' => 'Delete',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('polaris_report_delete_confirm', 1),
+    'access arguments' => array('administer type reports'),
+    'type' => MENU_LOCAL_ACTION,
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_permission()
+ */
+function polaris3_permission() {
+  $permissions = array(
+    'administer type reports' =>  array(
+      'title' => t('Administer Reports'),
+    ),
+    'view report list' => array(
+      'title' => t('View report list'),
+    ),
+    'view own reports' => array(
+      'title' => t('View own reports'),
+    ),
+    'edit own reports' => array(
+      'title' => t('Edit own reports'),
+    ),
+    'create reports' => array(
+      'title' => t('Create reports'),
+    ),
+  );
+  return $permissions;
+}
+
+/**
+ * Callback for a page title when report is displayed.
+ */
+function polaris_report_title($entity) {
+  return t('Polaris Report - @report_name', array('@report_name' => $report->report_name));
+}
+
+/**
+ * Report load callback.
+ */
+function polaris_report_load($id) {
+  $reports = entity_load('polaris_report', array($id));
+  return reset($reports);
+}
+
+/**
+ * Report delete submit callback.
+ */
+function polaris_report_form_delete_submit($form, &$form_state) {
+  $destination = array();
+  if(isset($_GET['destination'])) {
+    $destination = drupal_get_destination();
+    unset($_GET['destination']);
+  }
+  $report = $form['#report'];
+  $form_state['redirect'] = array(
+    'reports/' . $report->report_id . '/delete',
+    array('query' => $destination),
+  );
+}
+
+/**
+ * Report delete confirm form callback.
+ */
+function polaris_report_delete_confirm($form, &$form_state, $report) {
+  $form['#report'] = $report;
+  $form['report_id'] = array(
+    '#type' => 'value',
+    '#value' => $report->report_id,
+  );
+  return confirm_form($form,
+    t('Are you sure you want to delete @report?', array('@report' => $report->report_name)),
+    '<front>',
+    t('This action cannot be undone.'),
+    t('Delete'),
+    t('Cancel')
+  );
+}
+
+/**
+ * Report delete confirm form submit callback.
+ */
+function polaris_report_delete_confirm_submit($form, &$form_state) {
+  if($form_state['values']['confirm']) {
+    $report = polaris_report_load($form_state['values']['report_id']);
+
+    // Invoke the delete() method that we added to the controller.
+    entity_get_controller('polaris_report')->delete(array($report->report_id));
+    drupal_set_message(t('Report "@report" has been deleted.', array('@report' => $report->report_name)));
+  }
+  if(isset($_GET['destination'])) {
+    $destination = drupal_get_destination();
+    unset($_GET['destination']);
+  }
+  else {
+    $destination = array('destination' => '<front>');
+  }
+  $form_state['redirect'] = $destination['destination'];
+}
+
+/**
+ * Extend EFQ to add pager.
+ */
+class PolarisEntityFieldQuery extends EntityFieldQuery {
+  public function __construct() {
+    // define a pager
+    $this->pager(10);
+  }
+}

@@ -1,0 +1,8 @@
+name = folio
+description = Provides for hierarchical content organization.
+package = Custom
+core = 7.x
+files[] = folio.test
+configure = admin/content/folio/settings
+stylesheets[all][] = folio.css
+

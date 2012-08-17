@@ -1,0 +1,9 @@
+name = PolarisReport
+description = entity API version of Polaris module.
+core = 7.x
+package = Polaris
+
+files[] = polarisreport.info.inc
+
+dependencies[] = entity
+dependencies[] = uuid

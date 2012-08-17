@@ -1,0 +1,282 @@
+<?php
+
+/**
+ * @file
+ * Support for configurable user reports.
+ */
+
+// include_once drupal_get_path('module', 'polarisreport') .'/report_add_form.inc';
+// include_once drupal_get_path('module', 'polarisreport') .'/report_generate.inc';
+
+/**
+ * Implements hook_entity_info().
+ */
+function polarisreport_entity_info() {
+  $return['polarisreport'] = array(
+    'label' => t('Polaris report'),
+    'entity class' => 'PolarisReport',
+    'controller class' => 'PolarisReportController',
+    'base table' => 'polarisreport',
+    'fieldable' => FALSE,
+    'uuid' => TRUE,
+    'entity keys' => array(
+      'id' => 'report_id',
+      'name' => 'report_name',
+      'uuid' => 'uuid',
+    ),
+    'uri callback' => 'entity_class_uri',
+    'creation callback' => 'polarisreport_create',
+    'access callback' => 'polarisreport_access',
+    'module' => 'polarisreport',
+    'view modes' => array(
+      'report' => array(
+        'label' => t('Type report'),
+        'custom settings' => FALSE,
+      ),
+    ),  
+    'metadata controller class' => 'PolarisReportMetadataController'
+  );
+
+  // Support entity cache module.
+  if (module_exists('entitycache')) {
+    $return['polarisreport']['entity cache'] = TRUE;
+  }
+
+  return $return;
+}
+
+/**
+ * Implements hook_menu().
+ */
+function polarisreport_menu() {
+  // Add-report link.
+  $items['reports/add'] = array(
+    'title' => 'Add a report',
+    'page callback' => 'polarisreport_report_add',
+    'access arguments' => array('create reports'),
+    'file' => 'report_add_form.inc',
+    'weight' => 20,      
+    'type' => MENU_NORMAL_ITEM,
+  );
+  // Report-list link.  
+  $items['reports/list'] = array(
+    'title' => 'Your report list',
+    'page callback' => 'polarisreport_list',
+    'file' => 'report_list_form.inc',  
+    'access arguments' => array('view report list'),
+    'weight' => 21,      
+    'type' => MENU_NORMAL_ITEM,
+  );  
+  // Edit-report action-link
+  $items['reports/%polarisreport/edit'] = array(
+    'title' => 'Edit',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('polarisreport_report_form', 1),
+    'file' => 'report_add_form.inc',
+    'access arguments' => array('administer type reports'),
+    'type' => MENU_LOCAL_ACTION,
+  );
+  // Delete-report action-link
+  $items['reports/%polarisreport/delete'] = array(
+    'title' => 'Delete',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('polarisreport_delete_form', 1),
+    'file' => 'report_list_form.inc',
+    'access arguments' => array('administer type reports'),
+    'type' => MENU_LOCAL_ACTION,
+  );
+  // Generate-report action-link
+  $items['reports/%polarisreport/view'] = array(
+    'title' => 'Print',
+    'page callback' => 'polarisreport_generate',
+    'page arguments' => array(1),
+    'file' => 'report_generate.inc',
+    'access arguments' => array('administer type reports'),
+    'type' => MENU_LOCAL_ACTION,
+  );
+  
+  return $items;
+}
+
+/**
+ * Access callback for Entity API-provided administration section.
+
+function polarisreport_access($op, $entity = NULL, $account = NULL) {
+  return user_access('administer polaris reports', $account);
+}
+ */
+
+/**
+ * Implements hook_permission().
+ */
+function polarisreport_permission() {
+  return array(
+    'administer polaris reports' => array(
+      'title' => t('Administer Polaris reports'),
+      'restrict access' => TRUE,
+    ),
+  );
+}
+
+/**
+ * Load a polarisreport object.
+ *
+ * @param $report_id
+ *   Integer specifying the report id.
+ * @param $reset
+ *   A boolean indicating that the internal cache should be reset.
+ * @return
+ *   A fully-loaded $polarisreport object or FALSE if it cannot be loaded.
+ *
+ * @see polarisreport_load_multiple()
+ */
+function polarisreport_load($report_id, $reset = FALSE) {
+  $reports = polarisreport_load_multiple(array($report_id), array(), $reset);
+  return reset($reports);
+}
+
+/**
+ * Load multiple reports based on certain conditions.
+ *
+ * @param $report_ids
+ *   An array of report IDs.
+ * @param $conditions
+ *   An array of conditions to match against the {polarisreport_report} table.
+ * @param $reset
+ *   A boolean indicating that the internal cache should be reset.
+ * @return
+ *   An array of report objects, indexed by report_id.
+ *
+ * @see entity_load()
+ */
+function polarisreport_load_multiple($report_ids = array(), $conditions = array(), $reset = FALSE) {
+  return entity_load('polarisreport', $report_ids, $conditions, $reset);
+}
+
+
+/**
+ * Deletes a report.
+ */
+function polarisreport_delete(PolarisReport $report) {
+  $report->delete();
+}
+
+
+/**
+ * Delete multiple reports.
+ *
+ * @param $report_ids
+ *   An array of report IDs.
+ */
+function polarisreport_delete_multiple(array $report_ids) {
+  entity_get_controller('polarisreport')->delete($report_ids);
+}
+
+
+/**
+ * Create a report object.
+ */
+function polarisreport_create($values = array()) {
+  return entity_get_controller('polarisreport')->create($values);
+}
+
+
+/**
+ * Saves a report to the database.
+ *
+ * @param $report
+ *   The report object.
+ */
+function polarisreport_save(PolarisReport $report) {
+  return $report->save();
+}
+
+// report classes and controllers ===========================================
+
+/**
+ * The class used for report entities.
+ */
+class PolarisReport extends Entity {
+
+  public function __construct($values = array()) {
+    parent::__construct($values, 'polarisreport');
+  }
+
+  protected function defaultLabel() {
+    return $this->name;
+  }
+
+  protected function defaultUri() {
+    return array('path' => 'report/' . $this->report_id);
+  }
+}
+
+/**
+ * The Controller for report entities
+ */
+class PolarisReportController extends EntityAPIController {
+  public function __construct($entityType) {
+    parent::__construct($entityType);
+  }
+
+  /**
+   * Create a report
+   * Add report specific values
+   * 
+   * @return
+   *   A report object with all default fields initialized.
+   */
+  public function create(array $values = array()) {
+    $date = format_date(REQUEST_TIME, 'custom', 'Y-m-d H:i:s');
+    $values += array( 
+      'report_id' => '',
+      'report_name' => '',
+      'uid' => '',
+      'report_type' => '',
+      'score_type' => '',  
+      'date' => $date,
+      'fname1' => '',
+      'lname1' => '',
+      'org1' => '',
+      'p_type1' => '',
+      'narrative' => '',
+      'ei_score1' => 0,
+      'ns_score1' => 0,
+      'ft_score1' => 0,
+      'jp_score1' => 0,
+      'fname2' => '',
+      'lname2' => '',
+      'org2' => '',
+      'p_type2' => '',
+      'ei_score2' => 0,
+      'ns_score2' => 0,
+      'ft_score2' => 0,
+      'jp_score2' => 0,
+      'narrative' => 0,
+      'temperament' => 0,
+      'cat_org' => 0,
+      'cat_lead' => 0,
+      'cat_com' => 0,
+      'cat_prob' => 0,
+      'cat_stress' => 0,
+      'cat_motive' => 0,
+      'cat_team' => 0,
+      'cat_learn' => 0,
+      'cat_growth' => 0,
+    );
+    
+    $polarisreport = parent::create($values);
+    return $polarisreport;
+  }
+  
+}
+
+/**
+ * Extend EFQ to add pager.
+ */
+class PolarisReportEntityFieldQuery extends EntityFieldQuery {
+  public function __construct() {
+    // define a pager
+    $this->pager(10);
+  }
+}
